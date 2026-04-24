@@ -1,0 +1,20 @@
+{
+  "accounts": {},
+  "customers": {
+    "C100000": {
+      "created_utc": "2026-04-24T16:00:42.280671+00:00",
+      "customer_id": "C100000",
+      "is_flagged": false,
+      "last_updated_utc": "2026-04-24T16:01:44.838663+00:00",
+      "legal_name": "Jay Inc",
+      "location": "Toronto, ON Canada",
+      "name": "Jay Inc",
+      "preferred_account_type": "checking",
+      "status": "active"
+    }
+  },
+  "next_account": 700000,
+  "next_customer": 100001,
+  "next_tx": 1,
+  "transactions": []
+}

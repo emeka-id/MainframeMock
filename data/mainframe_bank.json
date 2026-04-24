@@ -1,0 +1,13 @@
+{
+  "accounts": {},
+  "customers": {
+    "C100000": {
+      "customer_id": "C100000",
+      "name": "Northbridge"
+    }
+  },
+  "next_account": 700000,
+  "next_customer": 100001,
+  "next_tx": 1,
+  "transactions": []
+}
