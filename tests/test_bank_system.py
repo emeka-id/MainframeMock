@@ -14,11 +14,17 @@ class BankSystemTests(unittest.TestCase):
         self.temp_dir.cleanup()
 
     def test_customer_account_and_deposit(self) -> None:
-        customer = self.bank.create_customer("Ada Lovelace")
+        customer = self.bank.create_customer(
+            "Ada Lovelace",
+            legal_name="Augusta Ada King-Noel",
+            location="London, UK",
+            preferred_account_type="checking",
+        )
         account = self.bank.open_account(customer.customer_id, "checking")
         self.bank.deposit(account.account_id, "50.25")
         updated = self.bank.get_account(account.account_id)
         self.assertEqual(updated.balance, "50.25")
+        self.assertEqual(updated.total_assets, "50.25")
 
     def test_withdraw_and_insufficient_funds(self) -> None:
         customer = self.bank.create_customer("Grace Hopper")
@@ -39,6 +45,25 @@ class BankSystemTests(unittest.TestCase):
 
         self.assertEqual(self.bank.get_account(a1.account_id).balance, "100.00")
         self.assertEqual(self.bank.get_account(a2.account_id).balance, "25.00")
+
+    def test_customer_status_flag_freeze_delete_and_total_assets(self) -> None:
+        customer = self.bank.create_customer("Dorothy Vaughan", preferred_account_type="savings")
+        account = self.bank.open_account(customer.customer_id)
+        self.bank.deposit(account.account_id, "250")
+
+        self.bank.flag_customer(customer.customer_id, True)
+        status = self.bank.get_customer_status(customer.customer_id)
+        self.assertTrue(status["is_flagged"])
+        self.assertEqual(status["total_assets"], "250.00")
+
+        self.bank.freeze_customer(customer.customer_id)
+        with self.assertRaises(ValueError):
+            self.bank.deposit(account.account_id, "1")
+
+        self.bank.delete_customer(customer.customer_id)
+        deleted_status = self.bank.get_customer_status(customer.customer_id)
+        self.assertEqual(deleted_status["status"], "deleted")
+        self.assertEqual(self.bank.get_account(account.account_id).status, "closed")
 
 
 if __name__ == "__main__":
