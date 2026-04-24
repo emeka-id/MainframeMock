@@ -18,9 +18,9 @@ class BankSystemTests(unittest.TestCase):
             "Ada Lovelace",
             legal_name="Augusta Ada King-Noel",
             location="London, UK",
-            preferred_account_type="checking",
+            preferred_account_type="corporate",
         )
-        account = self.bank.open_account(customer.customer_id, "checking")
+        account = self.bank.open_account(customer.customer_id, "corporate")
         self.bank.deposit(account.account_id, "50.25")
         updated = self.bank.get_account(account.account_id)
         self.assertEqual(updated.balance, "50.25")
@@ -28,7 +28,7 @@ class BankSystemTests(unittest.TestCase):
 
     def test_withdraw_and_insufficient_funds(self) -> None:
         customer = self.bank.create_customer("Grace Hopper")
-        account = self.bank.open_account(customer.customer_id, "savings")
+        account = self.bank.open_account(customer.customer_id, "individual")
         self.bank.deposit(account.account_id, "40")
         self.bank.withdraw(account.account_id, "10")
         updated = self.bank.get_account(account.account_id)
@@ -38,8 +38,8 @@ class BankSystemTests(unittest.TestCase):
 
     def test_transfer_moves_funds_between_accounts(self) -> None:
         customer = self.bank.create_customer("Katherine Johnson")
-        a1 = self.bank.open_account(customer.customer_id, "checking")
-        a2 = self.bank.open_account(customer.customer_id, "savings")
+        a1 = self.bank.open_account(customer.customer_id, "corporate")
+        a2 = self.bank.open_account(customer.customer_id, "individual")
         self.bank.deposit(a1.account_id, "125")
         self.bank.transfer(a1.account_id, a2.account_id, "25")
 
@@ -47,7 +47,7 @@ class BankSystemTests(unittest.TestCase):
         self.assertEqual(self.bank.get_account(a2.account_id).balance, "25.00")
 
     def test_customer_status_flag_freeze_delete_and_total_assets(self) -> None:
-        customer = self.bank.create_customer("Dorothy Vaughan", preferred_account_type="savings")
+        customer = self.bank.create_customer("Dorothy Vaughan", preferred_account_type="individual")
         account = self.bank.open_account(customer.customer_id)
         self.bank.deposit(account.account_id, "250")
 

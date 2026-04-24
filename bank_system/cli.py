@@ -17,7 +17,7 @@ ERROR_CODES = {
     "Deleted customer cannot be flagged": "MBE-109",
     "Customer name is required": "MBE-110",
     "Account does not exist": "MBE-201",
-    "Account type must be checking or savings": "MBE-202",
+    "Account type must be corporate or individual": "MBE-202",
     "Account is not open for transactions": "MBE-203",
     "Amount cannot be negative": "MBE-204",
     "Deposit must be greater than zero": "MBE-205",
@@ -153,7 +153,7 @@ def main() -> None:
                     continue
                 legal_name = read_field("Legal name (optional): ")
                 location = read_field("Location (optional): ")
-                preferred = read_field("Default account type [checking/savings] (optional): ")
+                preferred = read_field("Default account type [corporate/individual] (optional): ")
                 customer = bank.create_customer(
                     name,
                     legal_name=legal_name,
@@ -172,7 +172,7 @@ def main() -> None:
                 customer_id = read_field("Customer ID (or PF3): ")
                 if customer_id.upper() == "PF3":
                     continue
-                account_type = read_field("Account type [checking/savings] (blank uses customer default): ")
+                account_type = read_field("Account type [corporate/individual] (blank uses customer default): ")
                 account = bank.open_account(customer_id, account_type)
                 draw_screen(
                     "ACCOUNT OPENED",
@@ -222,7 +222,7 @@ def main() -> None:
                 name = read_field("Updated display name (optional): ") or None
                 legal_name = read_field("Updated legal name (optional): ") or None
                 location = read_field("Updated location (optional): ") or None
-                preferred = read_field("Updated default account type [checking/savings] (optional): ") or None
+                preferred = read_field("Updated default account type [corporate/individual] (optional): ") or None
                 customer = bank.update_customer(
                     customer_id,
                     name=name,

@@ -121,8 +121,8 @@ class BankSystem:
 
     def _validate_account_type(self, account_type: str) -> str:
         normalized_type = account_type.strip().lower()
-        if normalized_type not in {"checking", "savings"}:
-            raise ValueError("Account type must be checking or savings")
+        if normalized_type not in {"corporate", "individual"}:
+            raise ValueError("Account type must be corporate or individual")
         return normalized_type
 
     def _get_customer_data(self, customer_id: str) -> Dict:
