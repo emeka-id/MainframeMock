@@ -8,7 +8,7 @@ A lightweight, local "mainframe-style" banking system implemented in Python.
 - Customer profile capture (legal name, location, preferred account type)
 - Customer lifecycle actions (update, freeze, flag, delete)
 - Customer status lookup including total assets
-- Open checking or savings accounts
+- Open corporate or individual accounts
 - Deposit and withdraw funds
 - Transfer between accounts
 - Transaction journal (append-only)
@@ -73,6 +73,6 @@ from bank_system.core import BankSystem
 
 bank = BankSystem(db_path="data/mainframe_bank.json")
 customer = bank.create_customer("RPA Customer")
-account = bank.open_account(customer.customer_id, "checking")
+account = bank.open_account(customer.customer_id, "corporate")
 bank.deposit(account.account_id, "100.00")
 ```
