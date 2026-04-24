@@ -5,6 +5,9 @@ A lightweight, local "mainframe-style" banking system implemented in Python.
 ## Features
 
 - Customer onboarding
+- Customer profile capture (legal name, location, preferred account type)
+- Customer lifecycle actions (update, freeze, flag, delete)
+- Customer status lookup including total assets
 - Open checking or savings accounts
 - Deposit and withdraw funds
 - Transfer between accounts
